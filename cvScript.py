@@ -38,20 +38,23 @@ def main():
 
     if args.verbose:
         print(f"Begin regex... ")
-    for c, cv in lexicon.items():
-        if (c == cv):
-            continue
-        special_sym = r"([\s~@#\$%\^\&\*\(\)\-\+=\{\}\[\];:\'\"/\?\.>,<\\\|])"
-        pat = special_sym+c+special_sym
-        if re.search(pat, program):
-            i = 0
-            while True:
-                if not re.search(special_sym+c+str(i)+special_sym, program):
-                    program = re.sub(pat, r"\1"+c+str(i)+r"\2", program)
-                    break
-                i += 1 
-        pat = special_sym+cv+special_sym
-        program = re.sub(pat, r"\1"+c+r"\2", program)
+    for module in lexicon.keys():        
+        if args.verbose:
+            print(f"Start {module}")
+        for c, cv in lexicon[module].items():
+            if (c == cv):
+                continue
+            special_sym = r"([\s~@#\$%\^\&\*\(\)\-\+=\{\}\[\];:\'\"/\?\.>,<\\\|])"
+            pat = special_sym+c+special_sym
+            if re.search(pat, program):
+                i = 0
+                while True:
+                    if not re.search(special_sym+c+str(i)+special_sym, program):
+                        program = re.sub(pat, r"\1"+c+str(i)+r"\2", program)
+                        break
+                    i += 1 
+            pat = special_sym+cv+special_sym
+            program = re.sub(pat, r"\1"+c+r"\2", program)
     
     program = program[1:]
     if args.verbose:
