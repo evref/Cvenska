@@ -97,7 +97,7 @@
     "ungetc": "avfåk",
     "perror": "sfel"
   },
-  "stlib": {
+  "stdlib": {
     "size_t": "strl_t",
     "wchar_t": "bkar_t",
     "div_t": "del_t",
