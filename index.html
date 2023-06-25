@@ -1,35 +1,8 @@
 <!DOCTYPE html>
-<script>
-  fetch('lexicon.json')
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      appendData(data);
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
-
-  function appendData(data) {
-    var container = document.getElementById("lexicon");
-    console.log(typeof data);
-    Object.keys(data).forEach((module) => {
-      var name = document.createElement("div");
-      name.innerHTML = '<h1>' + module + '</h1>\n<p>C => CV</p>\n--------------';
-      container.appendChild(name);
-      Object.entries(data[module]).forEach(([c, cv]) => {
-        var div = document.createElement("div");
-        div.innerHTML = c + ' => ' + cv;
-        container.appendChild(div);
-      })
-    })
-  }
-</script>
-
 <html>
   <head>
     <title>C fast på Svenska</title>
+    <meta charset="UTF-8">
     <meta name="description" 
       content="A website for the Cvenska programming language">
   </head>
@@ -43,4 +16,55 @@
   </body>
 </html>
 
+<style>
+  body {
+    background-color: #EEE3C8;
+  }
 
+  table {
+    table-layout: fixed;
+    width: 50%;
+    border-collapse: collapse;
+  }
+  
+  table tr:nth-child(odd) {
+    background-color: #D7C0AE;
+  }
+
+  table tr:nth-child(even) {
+    background-color: #967E76;
+  }
+
+  th, td {
+    border: 1px solid;
+    padding: 20px;
+    text-align: center;
+  }
+</style>
+
+<script>
+  fetch('lexicon.json')
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    appendData(data);
+  })
+  .catch(function (err) {
+    console.log(err);
+  });
+
+  function appendData(data) {
+    var container = document.getElementById("lexicon");
+    console.log(typeof data);
+    Object.keys(data).forEach((module) => {
+      var table = document.createElement("table");
+      var html = "<h1>"+module+"</h1>\n" + "<tr><th>C</th><th>Cvenska</th></tr>\n"
+      Object.entries(data[module]).forEach(([c, cv]) => {
+        html += "<tr><td>" + c + "</td><td>" + cv + "</td></tr>\n";
+      })
+      table.innerHTML = html;
+      container.appendChild(table);
+    })
+  }
+</script>
